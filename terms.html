@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+<!-- FreeOO AI PRO v1.0 | Terms and Conditions | freeoo.in -->
+<meta name="description" content="FreeOO AI PRO Terms and Conditions — Legal terms for using the free real-time NSE/BSE option chain dashboard.">
+<title>Terms and Conditions — FreeOO AI PRO | freeoo.in</title>
+<link rel="canonical" href="https://www.freeoo.in/terms.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="FreeOO AI PRO — freeoo.in">
+<meta name="theme-color" content="#020912">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020912;--bg2:#050d1a;--bg3:#08101f;
+  --card:#0a1524;--border:#16283e;--border2:#1c3252;
+  --green:#00e676;--red:#ff4545;--amber:#ffc107;
+  --blue:#4aa3ff;--violet:#c39cff;--cyan:#00e5ff;--orange:#ff9800;--pink:#ff6090;
+  --text:#f0f6ff;--text2:#b8d4f0;--text3:#7090b8;--text4:#3a5c80;
+  --mono:'JetBrains Mono',monospace;--sans:'Rajdhani',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 49px,var(--border) 49px,var(--border) 50px),
+             repeating-linear-gradient(90deg,transparent,transparent 49px,var(--border) 49px,var(--border) 50px)}
+
+/* HEADER */
+.page-hdr{position:sticky;top:0;z-index:300;background:rgba(2,9,18,.98);border-bottom:2px solid var(--border2);backdrop-filter:blur(16px);padding:10px 16px}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;gap:10px;flex-wrap:wrap}
+.logo-link{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:700;font-size:17px;letter-spacing:1.5px;color:var(--text);text-decoration:none;flex-shrink:0}
+.logo-link:hover{color:var(--blue)}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:lp 1.4s infinite;flex-shrink:0}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.2}}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;padding:5px 12px;border-radius:4px;border:1px solid var(--border2);background:rgba(74,163,255,.06);color:var(--blue);text-decoration:none;transition:all .15s;white-space:nowrap}
+.back-btn:hover{background:rgba(74,163,255,.16);border-color:var(--blue)}
+.nav-links-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav-pill{font-family:var(--mono);font-size:9px;padding:3px 10px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text3);text-decoration:none;transition:all .15s;white-space:nowrap}
+.nav-pill:hover{background:rgba(74,163,255,.1);border-color:rgba(74,163,255,.4);color:var(--blue)}
+.nav-pill.active{background:rgba(74,163,255,.12);border-color:var(--blue);color:var(--blue)}
+
+/* PAGE LAYOUT */
+.page-wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:28px 16px 48px}
+.page-breadcrumb{font-family:var(--mono);font-size:9px;color:var(--text4);letter-spacing:.5px;margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.page-breadcrumb a{color:var(--text3);text-decoration:none}
+.page-breadcrumb a:hover{color:var(--blue)}
+.page-breadcrumb span{color:var(--text4)}
+
+.page-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:24px}
+.page-card-hdr{padding:16px 22px;border-bottom:1px solid var(--border);background:rgba(8,16,31,.98);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.page-icon{font-size:24px;flex-shrink:0}
+.page-title{font-family:var(--sans);font-weight:700;font-size:22px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text)}
+.page-subtitle{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.5px;margin-top:2px}
+.page-body{padding:24px 26px;font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.8}
+.page-body h3{font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:1px;color:var(--blue);text-transform:uppercase;margin:22px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.page-body h3:first-child{margin-top:0}
+.page-body p{margin-bottom:12px;color:var(--text2)}
+.page-body p:last-child{margin-bottom:0}
+.highlight-warn{color:var(--amber);font-weight:700}
+.highlight-link{color:var(--blue)}
+.last-updated{color:var(--text3);font-size:10px;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+
+/* INFO BOX */
+.info-box{background:rgba(74,163,255,.05);border:1px solid rgba(74,163,255,.2);border-left:3px solid var(--blue);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:11px;color:var(--text2);line-height:1.7}
+.warn-box{background:rgba(255,193,7,.04);border:1px solid rgba(255,193,7,.2);border-left:3px solid var(--amber);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:11px;color:var(--text2);line-height:1.7}
+
+/* FOOTER */
+.page-footer{text-align:center;padding:18px 16px 24px;font-family:var(--mono);font-size:9px;color:var(--text3);border-top:1px solid var(--border)}
+.footer-brand{font-size:11px;margin-bottom:6px;letter-spacing:.2px;color:var(--text2)}
+.footer-brand span{color:var(--blue)}
+.footer-legal-links{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.footer-legal-link{font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:3px;border:1px solid var(--border2);background:rgba(255,255,255,.03);color:var(--text3);text-decoration:none;transition:all .15s;white-space:nowrap;letter-spacing:.3px}
+.footer-legal-link:hover{background:rgba(74,163,255,.1);border-color:rgba(74,163,255,.4);color:var(--blue)}
+.footer-legal-link.active-page{background:rgba(74,163,255,.1);border-color:var(--blue);color:var(--blue)}
+.footer-copy{font-size:9px;color:var(--text4);margin-top:8px}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .page-hdr{padding:8px 12px}
+  .logo-link{font-size:14px}
+  .page-wrap{padding:16px 10px 36px}
+  .page-card-hdr{padding:12px 14px}
+  .page-title{font-size:17px}
+  .page-body{padding:16px 14px;font-size:11px}
+  .page-body h3{font-size:12px}
+  .nav-links-row{gap:3px}
+  .nav-pill{font-size:8px;padding:2px 7px}
+}
+@media(min-width:701px) and (max-width:1024px){
+  .page-wrap{padding:22px 20px 40px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="logo-link">
+      <div class="dot-live"></div>
+      FreeOO <span style="color:var(--text2);font-weight:400;margin-left:2px">AI PRO v1.0</span>
+    </a>
+    <div class="nav-links-row">
+      <a href="index.html" class="nav-pill">🏠 Home</a>
+      <a href="terms.html" class="nav-pill active">Terms</a>
+      <a href="privacy.html" class="nav-pill">Privacy</a>
+      <a href="disclaimers.html" class="nav-pill">Disclaimers</a>
+      <a href="about.html" class="nav-pill">About Us</a>
+      <a href="contact.html" class="nav-pill">Contact</a>
+    </div>
+    <a href="index.html" class="back-btn">← Back to Dashboard</a>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="page-wrap">
+  <div class="page-breadcrumb">
+    <a href="index.html">FreeOO AI PRO</a>
+    <span>›</span>
+    <span style="color:var(--blue)">Terms and Conditions</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-card-hdr">
+      <span class="page-icon">📋</span>
+      <div>
+        <div class="page-title">Terms and Conditions</div>
+        <div class="page-subtitle">Last Updated: June 05, 2026 · freeoo.in</div>
+      </div>
+    </div>
+    <div class="page-body">
+
+      <h3>1. Introduction</h3>
+      <p>Welcome to FreeOO.in! By accessing and using our platform, you agree to comply with and be bound by these Terms and Conditions. If you disagree with any part of these terms, please do not use our services. FreeOO.in is primarily focused on market analysis and trading tools. Access and use of FreeOO.in and all its properties are subject to these Terms of Use.</p>
+
+      <h3>2. Acceptance of Terms</h3>
+      <p>FreeOO.in is constantly improving and innovating to provide the best experience for users. By accessing or using this website, you agree to be bound by these terms and conditions. If you disagree with any part of these terms, you may contact us.</p>
+
+      <h3>3. Service Description and Disclaimer</h3>
+      <p>The services provided by FreeOO.in should not be construed as investment, trade, financial, tax, or legal advice. We are not registered under SEBI. You acknowledge and agree that any use of the service, decisions made in reliance on the services, including any trade or investment decisions or strategies, are made at your own risk. Past performance does not guarantee future returns, and performance of strategies or ideas are subject to market risk. The platform's analysis depends on past data modeling and may have deviations from real-time results.</p>
+
+      <div class="warn-box">⚠ The information on FreeOO.in is for educational and informational purposes only. It is not a substitute for professional financial advice. Always consult a qualified advisor before making investment or trading decisions.</div>
+
+      <h3>4. User Accounts and Security</h3>
+      <p>Users are responsible for maintaining the confidentiality of their account credentials and for all activities that occur under their account. You must ensure that your registration details are accurate and up-to-date at all times. If you suspect unauthorized use of your account, you must notify us immediately at <span class="highlight-link">freeoo.in@gmail.com</span></p>
+
+      <h3>5. Limitation of Liability</h3>
+      <p>FreeOO.in shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use our services, including but not limited to damages arising from:</p>
+      <p>Use of or inability to use the platform, any content contained on the website, errors, inaccuracies, or omissions in the service, system failures or interruptions, or data loss or unauthorized access.</p>
+      <p>FreeOO.in reserves the right to suspend or terminate your account access immediately and without prior notice if: (a) we determine it necessary at our sole discretion, (b) you violate any terms of this agreement, or (c) we detect any unauthorized or fraudulent activity. You have the right to terminate this agreement by formally notifying us of your decision. Upon termination, whether initiated by you or us, you must cease all use of FreeOO.in's services and platform immediately.</p>
+
+      <h3>6. Governing Law and Jurisdiction</h3>
+      <p>These terms and conditions are governed by and construed in accordance with the laws of India. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the courts in India.</p>
+
+      <h3>7. Changes to Terms</h3>
+      <p>We reserve the right to update or modify these terms and conditions at any time without prior notice. Your continued use of the website after any changes signifies your acceptance of the revised terms.</p>
+
+      <h3>8. Video Content Disclaimer</h3>
+      <p>The videos shared on the platform are produced by independent third parties. They may express personal views, strategies, or opinions that do not represent our website. We do not provide financial advice, and we are not responsible for any decisions made based on these videos. Please consult a qualified advisor before making investment choices.</p>
+
+      <div class="info-box">By using our platform, you agree to these terms and conditions. If you disagree with these terms, you can contact us at: <span class="highlight-link">freeoo.in@gmail.com</span></div>
+
+      <p class="last-updated">Last Updated: June 05, 2026</p>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-brand">FreeOO <span>AI PRO v1.0</span></div>
+  <div style="color:var(--amber);font-size:9px;margin-bottom:8px">⚠ Informational only — not financial advice</div>
+  <div class="footer-legal-links">
+    <a href="terms.html" class="footer-legal-link active-page">Terms and Conditions</a>
+    <a href="privacy.html" class="footer-legal-link">Privacy Policy</a>
+    <a href="disclaimers.html" class="footer-legal-link">Disclaimers</a>
+    <a href="about.html" class="footer-legal-link">About Us</a>
+    <a href="contact.html" class="footer-legal-link">Contact Us</a>
+  </div>
+  <div class="footer-copy">© 2026 FreeOO.in — All rights reserved.</div>
+</footer>
+
+</body>
+</html>
