@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+<!-- FreeOO AI PRO v1.0 | Option Charts | freeoo.in -->
+<meta name="description" content="FreeOO AI PRO Option Charts — Real-time Nifty & Sensex Open Interest, Change in OI, India VIX, PCR and ATM IV charts. Tick-by-tick live data.">
+<title>Option Charts — FreeOO AI PRO | freeoo.in</title>
+<link rel="canonical" href="https://www.freeoo.in/option-charts.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="FreeOO AI PRO — freeoo.in">
+<meta name="theme-color" content="#020912">
+<meta name="keywords" content="nifty open interest chart, sensex open interest chart, india vix chart, nifty PCR chart, sensex PCR chart, nifty ATM IV, sensex ATM IV, change in OI chart">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#020912;--bg2:#050d1a;--bg3:#08101f;
+  --card:#0a1524;--border:#16283e;--border2:#1c3252;
+  --green:#00e676;--red:#ff4545;--amber:#ffc107;
+  --blue:#4aa3ff;--violet:#c39cff;--cyan:#00e5ff;--orange:#ff9800;
+  --text:#f0f6ff;--text2:#b8d4f0;--text3:#7090b8;--text4:#3a5c80;
+  --mono:'JetBrains Mono',monospace;--sans:'Rajdhani',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 49px,var(--border) 49px,var(--border) 50px),
+             repeating-linear-gradient(90deg,transparent,transparent 49px,var(--border) 49px,var(--border) 50px)}
+.page-hdr{position:sticky;top:0;z-index:300;background:rgba(2,9,18,.98);border-bottom:2px solid var(--border2);backdrop-filter:blur(16px);padding:10px 16px}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;max-width:1800px;margin:0 auto;gap:10px;flex-wrap:wrap}
+.logo-link{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:700;font-size:17px;letter-spacing:1.5px;color:var(--text);text-decoration:none;flex-shrink:0}
+.logo-link:hover{color:var(--blue)}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:lp 1.4s infinite;flex-shrink:0}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.2}}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;padding:5px 12px;border-radius:4px;border:1px solid var(--border2);background:rgba(74,163,255,.06);color:var(--blue);text-decoration:none;transition:all .15s;white-space:nowrap}
+.back-btn:hover{background:rgba(74,163,255,.16);border-color:var(--blue)}
+.nav-links-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav-pill{font-family:var(--mono);font-size:9px;padding:3px 10px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text3);text-decoration:none;transition:all .15s;white-space:nowrap}
+.nav-pill:hover{background:rgba(74,163,255,.1);border-color:rgba(74,163,255,.4);color:var(--blue)}
+.nav-pill.active{background:rgba(74,163,255,.12);border-color:var(--blue);color:var(--blue)}
+.wrap{position:relative;z-index:1;max-width:1800px;margin:0 auto;padding:12px 12px 40px}
+.page-title-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;padding:8px 14px;background:var(--card);border:1px solid var(--border2);border-radius:8px}
+.page-title-txt{font-family:var(--sans);font-weight:700;font-size:22px;letter-spacing:1.5px;color:var(--text);text-transform:uppercase}
+.page-title-txt span{color:var(--blue)}
+.status-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:10px}
+.sb-item{display:flex;align-items:center;gap:4px;color:var(--text3)}
+.sb-val{color:var(--text2);font-weight:700}
+.sb-sep{color:var(--border2)}
+.mkt-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:3px;border:1px solid;font-size:9px;font-family:var(--mono)}
+.mkt-open{color:var(--green);border-color:var(--green);background:rgba(0,230,118,.08)}
+.mkt-closed{color:var(--amber);border-color:var(--amber);background:rgba(255,193,7,.08)}
+.upd-badge{font-family:var(--mono);font-size:8px;padding:2px 7px;border-radius:3px;display:inline-flex;align-items:center}
+.upd-ok{color:var(--green);border:1px solid rgba(0,230,118,.2);background:rgba(0,230,118,.05)}
+.upd-fetch{color:var(--cyan);border:1px solid rgba(0,229,255,.2);background:rgba(0,229,255,.05);animation:lp .6s infinite}
+.upd-err{color:var(--red);border:1px solid rgba(255,69,69,.2);background:rgba(255,69,69,.05)}
+.upd-wait{color:var(--text4);border:1px solid var(--border)}
+.sec{margin-bottom:14px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:7px 14px;background:rgba(8,16,31,.95);border:1px solid var(--border2);border-bottom:none;border-radius:8px 8px 0 0}
+.sec-title{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text)}
+.sec-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.exp-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid rgba(74,163,255,.3);background:rgba(74,163,255,.06);color:var(--blue)}
+.atm-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid rgba(195,156,255,.3);background:rgba(195,156,255,.06);color:var(--violet)}
+.cur-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid rgba(255,193,7,.3);background:rgba(255,193,7,.06);color:var(--amber)}
+.chart-card{background:var(--card);border:1px solid var(--border2);border-radius:0 0 8px 8px;padding:10px 12px 8px;position:relative;overflow:hidden}
+.chart-card::before{content:'';position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--blue) 50%,transparent)}
+.chart-box{position:relative;width:100%;height:370px}
+@media(max-width:900px){.chart-box{height:300px}}
+@media(max-width:600px){.chart-box{height:250px}}
+.chart-box canvas{display:block;width:100%!important;height:100%!important}
+.chart-legend{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0 2px;font-family:var(--mono);font-size:10px;color:var(--text3)}
+.leg-item{display:flex;align-items:center;gap:5px}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.leg-ce{background:rgba(255,69,69,.82)}
+.leg-pe{background:rgba(0,230,118,.82)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.g2{grid-template-columns:1fr}}
+/* Line chart overlay labels */
+.lc-wrap{position:relative}
+.lc-label{position:absolute;top:9px;left:11px;z-index:5;font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:3px;background:rgba(74,163,255,.09);border:1px solid rgba(74,163,255,.22);color:var(--blue);pointer-events:none;display:flex;align-items:center;gap:5px}
+.lc-cur-val{position:absolute;right:11px;top:9px;z-index:5;font-family:var(--mono);font-size:13px;font-weight:700;padding:3px 10px;border-radius:4px;background:rgba(10,21,36,.9);border:1px solid var(--border2);pointer-events:none;min-width:56px;text-align:right}
+/* Footer */
+.page-footer{text-align:center;padding:20px 16px 28px;font-family:var(--mono);font-size:9px;color:var(--text3);border-top:1px solid var(--border)}
+.footer-brand{font-size:11px;margin-bottom:6px;letter-spacing:.2px;color:var(--text2)}
+.footer-brand span{color:var(--blue)}
+.footer-legal-links{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.footer-legal-link{font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:3px;border:1px solid var(--border2);background:rgba(255,255,255,.03);color:var(--text3);text-decoration:none;transition:all .15s;white-space:nowrap;letter-spacing:.3px}
+.footer-legal-link:hover{background:rgba(74,163,255,.1);border-color:rgba(74,163,255,.4);color:var(--blue)}
+.footer-legal-link.active-page{background:rgba(74,163,255,.1);border-color:var(--blue);color:var(--blue)}
+.footer-copy{font-size:9px;color:var(--text4);margin-top:8px}
+@media(max-width:600px){
+  .page-hdr{padding:8px 10px}
+  .logo-link{font-size:14px}
+  .nav-pill{font-size:8px;padding:2px 7px}
+  .wrap{padding:8px 8px 30px}
+  .page-title-txt{font-size:17px}
+  .sec-title{font-size:13px}
+  .sec-hdr{padding:5px 9px}
+  .chart-card{padding:7px 9px 5px}
+  .lc-cur-val{font-size:11px}
+}
+@media(max-width:360px){
+  .page-title-txt{font-size:14px}
+  .nav-pill{font-size:7px;padding:2px 5px}
+}
+</style>
+</head>
+<body>
+
+<header class="page-hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="logo-link" title="FreeOO AI PRO Dashboard">
+      <div class="dot-live"></div>FreeOO <span style="color:var(--blue)">AI PRO</span>
+    </a>
+    <div class="nav-links-row">
+      <a href="index.html" class="nav-pill">🏠 Home</a>
+      <a href="option-charts.html" class="nav-pill active">📊 Option Charts</a>
+      <a href="terms.html" class="nav-pill">Terms</a>
+      <a href="privacy.html" class="nav-pill">Privacy</a>
+      <a href="disclaimers.html" class="nav-pill">Disclaimers</a>
+      <a href="about.html" class="nav-pill">About</a>
+      <a href="contact.html" class="nav-pill">Contact</a>
+    </div>
+    <a href="index.html" class="back-btn">← Dashboard</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="page-title-row">
+    <div class="page-title-txt">📊 Option <span>Charts</span></div>
+    <div class="status-row">
+      <span class="sb-item"><span class="mkt-badge mkt-closed" id="mktBadge">⬤ CLOSED</span></span>
+      <span class="sb-sep">·</span>
+      <span class="sb-item">N Exp:<span class="sb-val" id="nExpBadge"> --</span></span>
+      <span class="sb-sep">·</span>
+      <span class="sb-item">S Exp:<span class="sb-val" id="sExpBadge"> --</span></span>
+      <span class="sb-sep">·</span>
+      <span class="sb-item">Updated:<span class="sb-val" id="lastUpdBadge"> --</span></span>
+      <span class="sb-sep">·</span>
+      <span id="globalUpdBadge" class="upd-badge upd-wait">INIT</span>
+    </div>
+  </div>
+
+  <!-- A + C: Nifty OI + Sensex OI -->
+  <div class="g2 sec">
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">📈 Open Interest — Nifty 50</div>
+        <div class="sec-meta">
+          <span class="exp-badge">Exp: <span id="nOiExp">--</span></span>
+          <span class="atm-badge">ATM: <span id="nOiAtm">--</span></span>
+          <span class="upd-badge upd-wait" id="nOiUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box" id="nOiBox"><canvas id="nOiCanvas"></canvas></div>
+        <div class="chart-legend">
+          <span class="leg-item"><span class="leg-dot leg-ce"></span>CE_OI</span>
+          <span class="leg-item"><span class="leg-dot leg-pe"></span>PE_OI</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">📈 Open Interest — Sensex</div>
+        <div class="sec-meta">
+          <span class="exp-badge">Exp: <span id="sOiExp">--</span></span>
+          <span class="atm-badge">ATM: <span id="sOiAtm">--</span></span>
+          <span class="upd-badge upd-wait" id="sOiUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box" id="sOiBox"><canvas id="sOiCanvas"></canvas></div>
+        <div class="chart-legend">
+          <span class="leg-item"><span class="leg-dot leg-ce"></span>CE_OI</span>
+          <span class="leg-item"><span class="leg-dot leg-pe"></span>PE_OI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B + D: Nifty ΔOI + Sensex ΔOI -->
+  <div class="g2 sec">
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">📊 Change in OI — Nifty 50</div>
+        <div class="sec-meta">
+          <span class="exp-badge">Exp: <span id="nDoiExp">--</span></span>
+          <span class="atm-badge">ATM: <span id="nDoiAtm">--</span></span>
+          <span class="upd-badge upd-wait" id="nDoiUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box" id="nDoiBox"><canvas id="nDoiCanvas"></canvas></div>
+        <div class="chart-legend">
+          <span class="leg-item"><span class="leg-dot leg-ce"></span>CE_ΔOI</span>
+          <span class="leg-item"><span class="leg-dot leg-pe"></span>PE_ΔOI</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">📊 Change in OI — Sensex</div>
+        <div class="sec-meta">
+          <span class="exp-badge">Exp: <span id="sDoiExp">--</span></span>
+          <span class="atm-badge">ATM: <span id="sDoiAtm">--</span></span>
+          <span class="upd-badge upd-wait" id="sDoiUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box" id="sDoiBox"><canvas id="sDoiCanvas"></canvas></div>
+        <div class="chart-legend">
+          <span class="leg-item"><span class="leg-dot leg-ce"></span>CE_ΔOI</span>
+          <span class="leg-item"><span class="leg-dot leg-pe"></span>PE_ΔOI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: India VIX -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-title">⚡ India VIX — Intraday</div>
+      <div class="sec-meta">
+        <span class="cur-badge">VIX: <span id="vixCur">--</span></span>
+        <span class="upd-badge upd-wait" id="vixUpd">INIT</span>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-box lc-wrap" id="vixBox">
+        <div class="lc-label">👁 India VIX</div>
+        <div class="lc-cur-val" id="vixCurVal" style="color:var(--amber)">--</div>
+        <canvas id="vixCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- F + G: Nifty PCR + Sensex PCR -->
+  <div class="g2 sec">
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">🔵 Nifty PCR — Intraday</div>
+        <div class="sec-meta">
+          <span class="exp-badge">PCR: <span id="nPcrCur">--</span></span>
+          <span class="upd-badge upd-wait" id="nPcrUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box lc-wrap" id="nPcrBox">
+          <div class="lc-label">👁 PCR</div>
+          <div class="lc-cur-val" id="nPcrCurVal" style="color:var(--blue)">--</div>
+          <canvas id="nPcrCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">🔵 Sensex PCR — Intraday</div>
+        <div class="sec-meta">
+          <span class="exp-badge">PCR: <span id="sPcrCur">--</span></span>
+          <span class="upd-badge upd-wait" id="sPcrUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box lc-wrap" id="sPcrBox">
+          <div class="lc-label">👁 PCR</div>
+          <div class="lc-cur-val" id="sPcrCurVal" style="color:var(--blue)">--</div>
+          <canvas id="sPcrCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H + I: Nifty ATM IV + Sensex ATM IV -->
+  <div class="g2 sec">
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">🟣 Nifty ATM IV — Intraday</div>
+        <div class="sec-meta">
+          <span class="exp-badge" style="border-color:rgba(195,156,255,.3);color:var(--violet);background:rgba(195,156,255,.06)">IV: <span id="nIvCur">--</span>%</span>
+          <span class="upd-badge upd-wait" id="nIvUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box lc-wrap" id="nIvBox">
+          <div class="lc-label" style="border-color:rgba(195,156,255,.22);color:var(--violet);background:rgba(195,156,255,.07)">👁 ATM IV</div>
+          <div class="lc-cur-val" id="nIvCurVal" style="color:var(--violet)">--</div>
+          <canvas id="nIvCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-hdr">
+        <div class="sec-title">🟣 Sensex ATM IV — Intraday</div>
+        <div class="sec-meta">
+          <span class="exp-badge" style="border-color:rgba(195,156,255,.3);color:var(--violet);background:rgba(195,156,255,.06)">IV: <span id="sIvCur">--</span>%</span>
+          <span class="upd-badge upd-wait" id="sIvUpd">INIT</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-box lc-wrap" id="sIvBox">
+          <div class="lc-label" style="border-color:rgba(195,156,255,.22);color:var(--violet);background:rgba(195,156,255,.07)">👁 ATM IV</div>
+          <div class="lc-cur-val" id="sIvCurVal" style="color:var(--violet)">--</div>
+          <canvas id="sIvCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer class="page-footer">
+  <div class="footer-brand">FreeOO <span>AI PRO v1.0</span></div>
+  <div class="footer-legal-links">
+    <a href="index.html" class="footer-legal-link">🏠 Home</a>
+    <a href="option-charts.html" class="footer-legal-link active-page">📊 Option Charts</a>
+    <a href="terms.html" class="footer-legal-link">Terms and Conditions</a>
+    <a href="privacy.html" class="footer-legal-link">Privacy Policy</a>
+    <a href="disclaimers.html" class="footer-legal-link">Disclaimers</a>
+    <a href="about.html" class="footer-legal-link">About Us</a>
+    <a href="contact.html" class="footer-legal-link">Contact Us</a>
+  </div>
+  <div class="footer-copy">© 2026 FreeOO.in — All rights reserved.</div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// FreeOO AI PRO v1.0 — option-charts.html
+// Real-time OI · ΔOI · VIX · PCR · ATM IV  |  Upstox API v2+v3
+// REST polling + localStorage persistence · No extra WS slots used
+// ═══════════════════════════════════════════════════════════════════
+'use strict';
+
+// ── TOKEN — update daily (same as index.html) ──────────────────────
+const TOKEN='eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI3UUFRRlciLCJqdGkiOiI2OWY4ZTMyOWMzMWQ4NTY1YTg5ZWVlMTAiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNQbHVzUGxhbiI6dHJ1ZSwiaXNFeHRlbmRlZCI6dHJ1ZSwiaWF0IjoxNzc3OTE4NzYxLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE4MDk0NjgwMDB9.4QLCL3evOZXad7EM4TyYwvxlnu_3iwLZQ1ai-nB4Apg';
+
+// ── INSTRUMENT KEYS ─────────────────────────────────────────────────
+const NK='NSE_INDEX|Nifty 50', SK='BSE_INDEX|SENSEX', VK='NSE_INDEX|India VIX';
+const B2='https://api.upstox.com/v2', B3='https://api.upstox.com/v3';
+const PROXIES=['https://corsproxy.io/?','https://proxy.cors.sh/','https://thingproxy.freeboard.io/fetch/','https://corsproxy.org/?'];
+const LS_KEY='freeoo_oc_charts_v1';
+
+// ── RUNTIME STATE ────────────────────────────────────────────────────
+const ST={
+  sBase:'', sMode:'detecting',
+  nExpiry:null, sExpiry:null,
+  nLtp:0, sLtp:0, nAtm:0, sAtm:0,
+  nStep:50, sStep:100,
+  nChain:null, sChain:null,
+  rl:50, rlAt:Date.now(),
+  loopTm:null, loopRun:false, tick:0,
+  expTried:{n:false,s:false}
+};
+
+// ── SERIES ────────────────────────────────────────────────────────────
+let SER={vix:[],nPcr:[],sPcr:[],nIv:[],sIv:[]};
+
+// ── CHARTS ────────────────────────────────────────────────────────────
+const CH={nOi:null,sOi:null,nDoi:null,sDoi:null,vix:null,nPcr:null,sPcr:null,nIv:null,sIv:null};
+
+// ═══════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════
+const getIST=()=>new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata'}));
+const isOpen=()=>{const d=getIST(),dy=d.getDay();if(dy===0||dy===6)return false;const m=d.getHours()*60+d.getMinutes();return m>=555&&m<930;};
+const dStr=d=>{const dd=d instanceof Date?d:new Date(d);return dd.toISOString().split('T')[0];};
+// Reliable IST date — en-CA gives YYYY-MM-DD, timezone='Asia/Kolkata' = IST
+const getTodayIST=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
+
+function fmtOI(v){
+  const lk=100000,cr=10000000,abs=Math.abs(v),sign=v<0?'-':'';
+  if(abs===0)return '0';
+  if(abs>=cr)return sign+(abs/cr).toFixed(2)+' Cr';
+  if(abs>=lk)return sign+(abs/lk).toFixed(2)+' Lk';
+  return sign+abs.toFixed(0);
+}
+function fi(v,d=2){if(v==null||isNaN(v))return '--';return parseFloat(v).toFixed(d);}
+
+function fmtTime(ms){
+  try{
+    // Use Intl to safely get IST parts regardless of runtime timezone
+    const fmt=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit',hour12:true});
+    return fmt.format(new Date(ms));
+  }catch(e){
+    // Fallback
+    try{
+      const ist=new Date(new Date(ms).toLocaleString('en-US',{timeZone:'Asia/Kolkata'}));
+      let h=ist.getHours(),m=ist.getMinutes();
+      const ap=h>=12?'PM':'AM';h=h%12||12;
+      return `${h}:${String(m).padStart(2,'0')} ${ap}`;
+    }catch(e2){return '--';}
+  }
+}
+
+function calcATM(ltp,step){return Math.round(ltp/step)*step;}
+
+function setTxt(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function setUpd(id,cls,txt){
+  const e=document.getElementById(id);if(!e)return;
+  e.className='upd-badge '+cls;e.textContent=txt;
+}
+
+// IST timestamps via ISO+05:30 — works correctly regardless of browser/server timezone
+function _istDateParts(){
+  // en-CA gives YYYY-MM-DD in the specified timezone — guaranteed correct
+  const s=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
+  return s.split('-');// [yyyy, mm, dd]
+}
+function mktOpenMs(){const[y,m,d]=_istDateParts();return new Date(`${y}-${m}-${d}T09:15:00+05:30`).getTime();}
+function mktCloseMs(){const[y,m,d]=_istDateParts();return new Date(`${y}-${m}-${d}T15:30:00+05:30`).getTime();}
+
+// ═══════════════════════════════════════
+// RATE LIMITER
+// ═══════════════════════════════════════
+function rlOK(){
+  const now=Date.now(),el=(now-ST.rlAt)/1000;
+  ST.rl=Math.min(50,ST.rl+el*6);ST.rlAt=now;
+  if(ST.rl<1)return false;
+  ST.rl--;return true;
+}
+
+// ═══════════════════════════════════════
+// SERVER DETECTION
+// ═══════════════════════════════════════
+async function detectServer(){
+  const probe=`${B3}/market-quote/ltp?instrument_key=${encodeURIComponent(VK)}`;
+  const host=location.hostname;
+  const locals=['','http://localhost:3000','http://localhost:8080','http://localhost:8888'];
+  const cands=(host==='localhost'||host==='127.0.0.1')?locals:['','http://localhost:3000'];
+  for(const base of cands){
+    try{
+      const u=base?`${base}/api/upstox?url=${encodeURIComponent(probe)}&token=${encodeURIComponent(TOKEN)}`
+                  :`/api/upstox?url=${encodeURIComponent(probe)}&token=${encodeURIComponent(TOKEN)}`;
+      const r=await fetch(u,{signal:AbortSignal.timeout(3000),cache:'no-store'});
+      if(r.ok){ST.sBase=base;ST.sMode=base?'server':'sw';console.log('[OC] mode='+ST.sMode);return;}
+    }catch(e){}
+  }
+  ST.sMode='proxy';console.log('[OC] mode=proxy');
+}
+
+// ═══════════════════════════════════════
+// API LAYER
+// ═══════════════════════════════════════
+async function apiCall(path,base,ms=7000){
+  if(!rlOK())throw new Error('RL');
+  const url=(base||B3).replace(/\/$/,'')+path;
+
+  // Server/SW proxy
+  if(ST.sMode==='server'||ST.sMode==='sw'){
+    try{
+      const pu=ST.sBase?`${ST.sBase}/api/upstox?url=${encodeURIComponent(url)}&token=${encodeURIComponent(TOKEN)}`
+                      :`/api/upstox?url=${encodeURIComponent(url)}&token=${encodeURIComponent(TOKEN)}`;
+      const r=await fetch(pu,{signal:AbortSignal.timeout(ms),cache:'no-store'});
+      if(r.status===401)throw new Error('TOKEN');
+      if(r.ok)return r.json();
+    }catch(e){if(e.message==='TOKEN')throw e;}
+  }
+
+  // Direct (CORS open environments)
+  try{
+    const r=await fetch(url,{headers:{'Authorization':`Bearer ${TOKEN}`,'Accept':'application/json'},signal:AbortSignal.timeout(ms),cache:'no-store'});
+    if(r.ok)return r.json();
+  }catch(e){}
+
+  // CORS proxies
+  for(const px of PROXIES){
+    try{
+      const r=await fetch(px+encodeURIComponent(url),{headers:{'Authorization':`Bearer ${TOKEN}`,'Accept':'application/json'},signal:AbortSignal.timeout(6000),cache:'no-store'});
+      if(r.ok){ST.sMode='proxy';return r.json();}
+    }catch(e){}
+  }
+  throw new Error('ALL_FAIL');
+}
+
+// ═══════════════════════════════════════
+// EXPIRY CACHE (localStorage, per instrument, per trading day)
+// ═══════════════════════════════════════
+function _expKey(ikey){return'freeoo_exp_'+ikey.replace(/[^a-zA-Z0-9]/g,'_');}
+function getCachedExpiry(ikey){
+  try{
+    const raw=localStorage.getItem(_expKey(ikey));if(!raw)return null;
+    const{savedDate,expiry}=JSON.parse(raw);
+    const today=getTodayIST();
+    if(savedDate!==today){localStorage.removeItem(_expKey(ikey));return null;}// new day
+    // If the cached expiry IS today, invalidate after 3:30 PM IST (expiry expired)
+    const now=getIST(),m=now.getHours()*60+now.getMinutes();
+    if(expiry===today&&m>=930){localStorage.removeItem(_expKey(ikey));return null;}
+    return expiry;
+  }catch(e){return null;}
+}
+function setCachedExpiry(ikey,expiry){
+  try{localStorage.setItem(_expKey(ikey),JSON.stringify({savedDate:getTodayIST(),expiry}));}catch(e){}
+}
+
+// ═══════════════════════════════════════
+// EXPIRY PROBE — tries every Mon-Fri for the next 10 days
+// Finds the FIRST weekday that has live option chain data = current week expiry
+// ═══════════════════════════════════════
+async function probeExpiry(ikey){
+  // Return cached result if still valid
+  const cached=getCachedExpiry(ikey);
+  if(cached){console.log('[OC] Expiry (cached):',ikey,cached);return cached;}
+
+  const now=getIST();
+  const today=getTodayIST();
+  const mNow=now.getHours()*60+now.getMinutes();
+  const dates=[];
+
+  // Scan Mon-Fri for next 12 days
+  for(let offset=0;offset<=12;offset++){
+    const d=new Date(now);d.setDate(d.getDate()+offset);
+    const wd=d.getDay();
+    if(wd===0||wd===6)continue;// skip Sat/Sun
+    const ds=dStr(d);
+    // Skip today if expiry has already passed (after 3:30 PM)
+    if(ds===today&&mNow>=930)continue;
+    dates.push(ds);
+  }
+
+  console.log('[OC] probeExpiry scanning',dates.length,'dates for',ikey);
+  for(const dt of dates){
+    try{
+      const p=`/option/chain?instrument_key=${encodeURIComponent(ikey)}&expiry_date=${dt}`;
+      const resp=await apiCall(p,B2,5000);
+      if(resp?.data?.length>2){
+        console.log('[OC] Expiry found:',ikey,'→',dt);
+        setCachedExpiry(ikey,dt);
+        return dt;
+      }
+    }catch(e){
+      if(e.message==='RL'){console.warn('[OC] RL during expiry probe');break;}
+    }
+  }
+  // Absolute fallback: next Thursday
+  const fb=new Date(now);
+  const fbDa=(4-fb.getDay()+7)%7||7;
+  fb.setDate(fb.getDate()+fbDa);
+  const fbStr=dStr(fb);
+  console.warn('[OC] Expiry probe failed, using fallback:',fbStr);
+  return fbStr;
+}
+
+// ═══════════════════════════════════════
+// CHART FACTORIES
+// ═══════════════════════════════════════
+
+// ATM vertical line plugin (per-chart instance)
+function makeATMPlugin(chartId){
+  return{
+    id:'atm_'+chartId,
+    afterDraw(chart){
+      const atm=chart._atm;
+      if(!atm||!chart.data.labels||!chart.data.labels.length)return;
+      const idx=chart.data.labels.indexOf(String(atm));
+      if(idx<0)return;
+      const meta=chart.getDatasetMeta(0);
+      const bar=meta&&meta.data[idx];
+      if(!bar)return;
+      const{ctx:c,chartArea:ca}=chart;
+      c.save();
+      c.strokeStyle='#4aa3ff';c.lineWidth=2;c.setLineDash([]);c.globalAlpha=.92;
+      c.beginPath();c.moveTo(bar.x,ca.top);c.lineTo(bar.x,ca.bottom);c.stroke();
+      c.globalAlpha=1;c.fillStyle='#4aa3ff';
+      c.font='bold 10px "JetBrains Mono",monospace';c.textAlign='center';
+      c.fillText('ATM: '+atm,bar.x,ca.top-4);
+      c.restore();
+    }
+  };
+}
+
+// Current time dotted line plugin (per chart)
+function makeNowPlugin(chartId){
+  return{
+    id:'now_'+chartId,
+    afterDraw(chart){
+      if(!isOpen())return;
+      const{ctx:c,chartArea:ca,scales}=chart;
+      if(!scales||!scales.x)return;
+      const xp=scales.x.getPixelForValue(Date.now());
+      if(xp<ca.left||xp>ca.right)return;
+      c.save();c.strokeStyle='rgba(176,200,255,.3)';c.lineWidth=1;c.setLineDash([3,5]);
+      c.beginPath();c.moveTo(xp,ca.top);c.lineTo(xp,ca.bottom);c.stroke();c.restore();
+    }
+  };
+}
+
+function buildOIChart(cid,mode){
+  const isDOI=mode==='doi';
+  const ctx=document.getElementById(cid).getContext('2d');
+  const chart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:[],
+      datasets:[
+        {label:isDOI?'CE_ΔOI':'CE_OI',data:[],
+         backgroundColor:'rgba(255,69,69,0.72)',borderColor:'#ff4545',borderWidth:1,
+         borderRadius:2,borderSkipped:false,barPercentage:.82,categoryPercentage:.88},
+        {label:isDOI?'PE_ΔOI':'PE_OI',data:[],
+         backgroundColor:'rgba(0,230,118,0.72)',borderColor:'#00e676',borderWidth:1,
+         borderRadius:2,borderSkipped:false,barPercentage:.82,categoryPercentage:.88}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      animation:{duration:220},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          enabled:true,mode:'index',intersect:false,
+          backgroundColor:'rgba(10,21,36,.96)',borderColor:'#1c3252',borderWidth:1,
+          titleColor:'#f0f6ff',bodyColor:'#b8d4f0',padding:10,
+          titleFont:{family:'JetBrains Mono',size:12,weight:'bold'},
+          bodyFont:{family:'JetBrains Mono',size:11},
+          callbacks:{
+            title:items=>`Strike: ${items[0]?.label||'--'}`,
+            label:item=>`${item.dataset.label}: ${fmtOI(item.raw)}`
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:'rgba(22,40,62,.5)',drawTicks:false},border:{color:'rgba(22,40,62,.8)'},
+           ticks:{color:'#7090b8',font:{family:'JetBrains Mono',size:9},maxRotation:45,minRotation:0}},
+        y:{grid:{color:'rgba(22,40,62,.5)',drawTicks:false},border:{color:'rgba(22,40,62,.8)'},
+           ticks:{color:'#7090b8',font:{family:'JetBrains Mono',size:9},callback:v=>fmtOI(v)}}
+      }
+    },
+    plugins:[makeATMPlugin(cid)]
+  });
+  chart._atm=null;
+  // Click anywhere to close tooltip
+  document.getElementById(cid).addEventListener('click',()=>{
+    chart.tooltip.setActiveElements([],{x:0,y:0});
+    chart.update('none');
+  });
+  return chart;
+}
+
+function buildLineChart(cid,color){
+  const ctx=document.getElementById(cid).getContext('2d');
+  const chart=new Chart(ctx,{
+    type:'line',
+    data:{
+      datasets:[{
+        data:[],
+        parsing:false,
+        borderColor:color,
+        backgroundColor:hexToRgba(color,.09),
+        fill:true,
+        tension:.3,
+        pointRadius:0,
+        pointHoverRadius:5,
+        pointHoverBackgroundColor:color,
+        borderWidth:2.2
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      animation:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          mode:'index',intersect:false,
+          backgroundColor:'rgba(10,21,36,.96)',borderColor:'#1c3252',borderWidth:1,
+          titleColor:'#f0f6ff',bodyColor:'#b8d4f0',padding:9,
+          titleFont:{family:'JetBrains Mono',size:10},
+          bodyFont:{family:'JetBrains Mono',size:12,weight:'bold'},
+          callbacks:{
+            title:items=>{if(!items[0])return'';return fmtTime(items[0].parsed.x);},
+            label:item=>fi(item.parsed.y,3)
+          }
+        }
+      },
+      scales:{
+        x:{type:'linear',
+           min:mktOpenMs(),max:mktCloseMs(),
+           grid:{color:'rgba(22,40,62,.4)',drawTicks:false},
+           border:{color:'rgba(22,40,62,.8)'},
+           ticks:{color:'#7090b8',font:{family:'JetBrains Mono',size:9},maxTicksLimit:8,callback:v=>fmtTime(v)}
+        },
+        y:{position:'right',
+           grid:{color:'rgba(22,40,62,.4)',drawTicks:false},
+           border:{color:'rgba(22,40,62,.8)'},
+           ticks:{color:'#7090b8',font:{family:'JetBrains Mono',size:9},maxTicksLimit:7}
+        }
+      }
+    },
+    plugins:[makeNowPlugin(cid)]
+  });
+  return chart;
+}
+
+function hexToRgba(hex,a){
+  if(hex.startsWith('#')){
+    const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+  return hex.replace(')',`,${a})`).replace('rgb(','rgba(');
+}
+
+// ═══════════════════════════════════════
+// CHART UPDATERS
+// ═══════════════════════════════════════
+function updateOIChart(chart,chain,atm,step,mode,updId){
+  if(!chain||!chain.length)return;
+  const isDOI=mode==='doi';
+  const RANGE=9;
+  const filt=chain.filter(r=>Math.abs(r.strike_price-atm)<=step*RANGE).sort((a,b)=>a.strike_price-b.strike_price);
+  if(!filt.length)return;
+
+  chart.data.labels=filt.map(r=>String(r.strike_price));
+  chart.data.datasets[0].data=filt.map(r=>{
+    const cm=r.call_options?.market_data||{};
+    return isDOI?(cm.prev_oi?(+(cm.oi||0)-+cm.prev_oi):(cm.oi_change||0)):(cm.oi||0);
+  });
+  chart.data.datasets[1].data=filt.map(r=>{
+    const pm=r.put_options?.market_data||{};
+    return isDOI?(pm.prev_oi?(+(pm.oi||0)-+pm.prev_oi):(pm.oi_change||0)):(pm.oi||0);
+  });
+  chart._atm=atm;
+  chart.update('none');
+  setUpd(updId,'upd-ok',fmtTime(Date.now()));
+}
+
+function refreshLineChart(chart,series,curValId,badgeId,dec){
+  if(!series.length)return;
+  // Update x-axis range to today's trading window
+  chart.options.scales.x.min=mktOpenMs();
+  chart.options.scales.x.max=mktCloseMs();
+  chart.data.datasets[0].data=series.map(p=>({x:p.x,y:p.y}));
+  chart.update('none');
+  const last=series[series.length-1];
+  if(last){
+    const v=fi(last.y,dec);
+    setTxt(curValId,v);
+    if(badgeId)setTxt(badgeId,v);
+  }
+}
+
+function pushSeries(series,ms,val){
+  if(val==null||isNaN(val)||val<=0)return false;
+  const same=series.findIndex(p=>Math.abs(p.x-ms)<55000);
+  if(same>=0){series[same]={x:ms,y:val};}
+  else{series.push({x:ms,y:val});}
+  if(series.length>420)series.splice(0,series.length-420);
+  series.sort((a,b)=>a.x-b.x);
+  return true;
+}
+
+// ═══════════════════════════════════════
+// LOCALSTORAGE
+// ═══════════════════════════════════════
+function loadLS(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);if(!raw)return;
+    const d=JSON.parse(raw);
+    if(d.date!==getTodayIST())return;
+    if(d.vix)SER.vix=d.vix;if(d.nPcr)SER.nPcr=d.nPcr;if(d.sPcr)SER.sPcr=d.sPcr;
+    if(d.nIv)SER.nIv=d.nIv;if(d.sIv)SER.sIv=d.sIv;
+  }catch(e){}
+}
+let _lsSave=0;
+function saveLS(){
+  const now=Date.now();if(now-_lsSave<12000)return;_lsSave=now;
+  try{localStorage.setItem(LS_KEY,JSON.stringify({
+    date:getTodayIST(),
+    vix:SER.vix.slice(-400),nPcr:SER.nPcr.slice(-400),sPcr:SER.sPcr.slice(-400),
+    nIv:SER.nIv.slice(-400),sIv:SER.sIv.slice(-400)
+  }));}catch(e){}
+}
+
+// ═══════════════════════════════════════
+// DATA FETCHERS
+// ═══════════════════════════════════════
+async function fetchChain(ikey,expiry){
+  if(!expiry)return null;
+  try{
+    const d=await apiCall(`/option/chain?instrument_key=${encodeURIComponent(ikey)}&expiry_date=${expiry}`,B2,6000);
+    return d?.data?.length>0?d.data:null;
+  }catch(e){return null;}
+}
+
+async function fetchLTP(ikey){
+  try{
+    const d=await apiCall(`/market-quote/ltp?instrument_key=${encodeURIComponent(ikey)}`,B3,5000);
+    const keys=Object.keys(d?.data||{});
+    return parseFloat(d?.data?.[keys[0]]?.last_price||0)||0;
+  }catch(e){return 0;}
+}
+
+async function fetchVIXIntraday(){
+  // Fill VIX from Upstox intraday 1-min candles — fills missing data from 9:15 to now
+  const enc=encodeURIComponent('NSE_INDEX|India VIX');
+  let candles=null;
+  // Try v2 first (confirmed endpoint), fall back to v3
+  for(const base of [B2,B3]){
+    try{
+      const d=await apiCall(`/historical-candle/intraday/${enc}/1minute/`,base,9000);
+      if(d?.data?.candles?.length){candles=d.data.candles;break;}
+    }catch(e){}
+  }
+  if(!candles||!candles.length){console.warn('[OC] VIX intraday: no candles');return;}
+  const today=getTodayIST();
+  let added=0;
+  candles.forEach(c=>{
+    const tsStr=Array.isArray(c)?c[0]:c.timestamp;
+    if(!tsStr)return;
+    // Use Date.parse which handles ISO 8601 with timezone offset correctly
+    const ms=Date.parse(tsStr);
+    if(!ms||isNaN(ms))return;
+    // Check IST date of this candle
+    const istParts=new Date(ms).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});// YYYY-MM-DD
+    if(istParts!==today)return;
+    const close=parseFloat(Array.isArray(c)?c[4]:c.close);
+    if(close>0&&pushSeries(SER.vix,ms,close))added++;
+  });
+  console.log('[OC] VIX intraday: +'+added+' pts, total:'+SER.vix.length);
+}
+
+// ═══════════════════════════════════════
+// NIFTY REFRESH
+// ═══════════════════════════════════════
+async function refreshNifty(){
+  if(!ST.nExpiry){
+    setUpd('nOiUpd','upd-fetch','EXPIRY…');setUpd('nDoiUpd','upd-fetch','EXPIRY…');
+    ST.nExpiry=await probeExpiry(NK);// auto-probe all Mon-Fri
+    setTxt('nOiExp',ST.nExpiry);setTxt('nDoiExp',ST.nExpiry);setTxt('nExpBadge',ST.nExpiry);
+  }
+  setUpd('nOiUpd','upd-fetch','FETCH…');setUpd('nDoiUpd','upd-fetch','FETCH…');
+
+  const chain=await fetchChain(NK,ST.nExpiry);
+  if(!chain){
+    if(!ST.expTried.n){
+      ST.expTried.n=true;
+      ST.nExpiry=await probeExpiry(NK);
+      setTxt('nOiExp',ST.nExpiry);setTxt('nDoiExp',ST.nExpiry);setTxt('nExpBadge',ST.nExpiry);
+    }
+    setUpd('nOiUpd','upd-err','NO DATA');setUpd('nDoiUpd','upd-err','NO DATA');return;
+  }
+  ST.expTried.n=false;ST.nChain=chain;
+
+  // LTP / ATM
+  if(!ST.nLtp||ST.tick%4===0)ST.nLtp=await fetchLTP(NK);
+  if(ST.nLtp>0){
+    // Detect step from chain
+    if(chain.length>1){const ss=chain.map(r=>r.strike_price).sort((a,b)=>a-b);ST.nStep=ss[1]-ss[0]||50;}
+    ST.nAtm=calcATM(ST.nLtp,ST.nStep);
+  }else{
+    const sorted=chain.filter(r=>(r.call_options?.market_data?.oi||0)>0).sort((a,b)=>a.strike_price-b.strike_price);
+    if(sorted.length){ST.nAtm=sorted[Math.floor(sorted.length/2)].strike_price;}
+  }
+  setTxt('nOiAtm',ST.nAtm);setTxt('nDoiAtm',ST.nAtm);
+
+  updateOIChart(CH.nOi,chain,ST.nAtm,ST.nStep,'oi','nOiUpd');
+  updateOIChart(CH.nDoi,chain,ST.nAtm,ST.nStep,'doi','nDoiUpd');
+
+  // PCR
+  let tC=0,tP=0;
+  chain.forEach(r=>{tC+=r.call_options?.market_data?.oi||0;tP+=r.put_options?.market_data?.oi||0;});
+  const nPcr=tC>0?tP/tC:0;
+
+  // ATM IV (±1 strike average)
+  let ceIV=0,peIV=0,ivCnt=0;
+  chain.forEach(r=>{
+    if(Math.abs(r.strike_price-ST.nAtm)<=ST.nStep){
+      const cIV=r.call_options?.option_greeks?.iv||r.call_options?.market_data?.iv||0;
+      const pIV=r.put_options?.option_greeks?.iv||r.put_options?.market_data?.iv||0;
+      if(cIV>0){ceIV+=cIV;ivCnt++;}
+      if(pIV>0){peIV+=pIV;ivCnt++;}
+    }
+  });
+  const nIV=ivCnt>0?(ceIV+peIV)/ivCnt:0;
+
+  const now=Date.now();
+  if(nPcr>0){pushSeries(SER.nPcr,now,nPcr);setTxt('nPcrCur',fi(nPcr,2));}
+  if(nIV>0){pushSeries(SER.nIv,now,nIV);setTxt('nIvCur',fi(nIV,1));}
+  if(SER.nPcr.length){refreshLineChart(CH.nPcr,SER.nPcr,'nPcrCurVal','nPcrCur',2);setUpd('nPcrUpd','upd-ok',fmtTime(now));}
+  if(SER.nIv.length){refreshLineChart(CH.nIv,SER.nIv,'nIvCurVal','nIvCur',1);setUpd('nIvUpd','upd-ok',fmtTime(now));}
+}
+
+// ═══════════════════════════════════════
+// SENSEX REFRESH
+// ═══════════════════════════════════════
+async function refreshSensex(){
+  if(!ST.sExpiry){
+    setUpd('sOiUpd','upd-fetch','EXPIRY…');setUpd('sDoiUpd','upd-fetch','EXPIRY…');
+    ST.sExpiry=await probeExpiry(SK);// auto-probe all Mon-Fri
+    setTxt('sOiExp',ST.sExpiry);setTxt('sDoiExp',ST.sExpiry);setTxt('sExpBadge',ST.sExpiry);
+  }
+  setUpd('sOiUpd','upd-fetch','FETCH…');setUpd('sDoiUpd','upd-fetch','FETCH…');
+
+  const chain=await fetchChain(SK,ST.sExpiry);
+  if(!chain){
+    if(!ST.expTried.s){
+      ST.expTried.s=true;
+      ST.sExpiry=await probeExpiry(SK);
+      setTxt('sOiExp',ST.sExpiry);setTxt('sDoiExp',ST.sExpiry);setTxt('sExpBadge',ST.sExpiry);
+    }
+    setUpd('sOiUpd','upd-err','NO DATA');setUpd('sDoiUpd','upd-err','NO DATA');return;
+  }
+  ST.expTried.s=false;ST.sChain=chain;
+
+  if(!ST.sLtp||ST.tick%4===0)ST.sLtp=await fetchLTP(SK);
+  if(ST.sLtp>0){
+    if(chain.length>1){const ss=chain.map(r=>r.strike_price).sort((a,b)=>a-b);ST.sStep=ss[1]-ss[0]||100;}
+    ST.sAtm=calcATM(ST.sLtp,ST.sStep);
+  }else{
+    const sorted=chain.filter(r=>(r.call_options?.market_data?.oi||0)>0).sort((a,b)=>a.strike_price-b.strike_price);
+    if(sorted.length){ST.sAtm=sorted[Math.floor(sorted.length/2)].strike_price;}
+  }
+  setTxt('sOiAtm',ST.sAtm);setTxt('sDoiAtm',ST.sAtm);
+
+  updateOIChart(CH.sOi,chain,ST.sAtm,ST.sStep,'oi','sOiUpd');
+  updateOIChart(CH.sDoi,chain,ST.sAtm,ST.sStep,'doi','sDoiUpd');
+
+  let tC=0,tP=0;
+  chain.forEach(r=>{tC+=r.call_options?.market_data?.oi||0;tP+=r.put_options?.market_data?.oi||0;});
+  const sPcr=tC>0?tP/tC:0;
+
+  let ceIV=0,peIV=0,ivCnt=0;
+  chain.forEach(r=>{
+    if(Math.abs(r.strike_price-ST.sAtm)<=ST.sStep){
+      const cIV=r.call_options?.option_greeks?.iv||r.call_options?.market_data?.iv||0;
+      const pIV=r.put_options?.option_greeks?.iv||r.put_options?.market_data?.iv||0;
+      if(cIV>0){ceIV+=cIV;ivCnt++;}
+      if(pIV>0){peIV+=pIV;ivCnt++;}
+    }
+  });
+  const sIV=ivCnt>0?(ceIV+peIV)/ivCnt:0;
+
+  const now=Date.now();
+  if(sPcr>0){pushSeries(SER.sPcr,now,sPcr);setTxt('sPcrCur',fi(sPcr,2));}
+  if(sIV>0){pushSeries(SER.sIv,now,sIV);setTxt('sIvCur',fi(sIV,1));}
+  if(SER.sPcr.length){refreshLineChart(CH.sPcr,SER.sPcr,'sPcrCurVal','sPcrCur',2);setUpd('sPcrUpd','upd-ok',fmtTime(now));}
+  if(SER.sIv.length){refreshLineChart(CH.sIv,SER.sIv,'sIvCurVal','sIvCur',1);setUpd('sIvUpd','upd-ok',fmtTime(now));}
+}
+
+// ═══════════════════════════════════════
+// VIX REFRESH
+// ═══════════════════════════════════════
+async function refreshVIX(){
+  setUpd('vixUpd','upd-fetch','FETCH…');
+  try{
+    const d=await apiCall(`/market-quote/ltp?instrument_key=${encodeURIComponent(VK)}`,B3,5000);
+    const keys=Object.keys(d?.data||{});
+    const ltp=parseFloat(d?.data?.[keys[0]]?.last_price||0);
+    if(ltp>0){
+      const now=Date.now();
+      pushSeries(SER.vix,now,ltp);
+      setTxt('vixCur',fi(ltp,2));
+      const col=ltp>20?'var(--red)':ltp<12?'var(--green)':'var(--amber)';
+      const el=document.getElementById('vixCur');if(el)el.style.color=col;
+      refreshLineChart(CH.vix,SER.vix,'vixCurVal',null,2);
+      const cv=document.getElementById('vixCurVal');if(cv)cv.style.color=col;
+      setUpd('vixUpd','upd-ok',fmtTime(now));
+    }else{setUpd('vixUpd','upd-err','ERR');}
+  }catch(e){setUpd('vixUpd','upd-err','ERR');}
+}
+
+// ═══════════════════════════════════════
+// MAIN LOOP
+// ═══════════════════════════════════════
+async function mainLoop(){
+  if(ST.loopRun)return;
+  ST.loopRun=true;ST.tick++;
+  try{
+    const open=isOpen();
+    const mb=document.getElementById('mktBadge');
+    if(mb){mb.className='mkt-badge '+(open?'mkt-open':'mkt-closed');mb.textContent=open?'⬤ OPEN':'⬤ CLOSED';}
+    setUpd('globalUpdBadge','upd-fetch','UPDATING…');
+
+    // Run both instruments in parallel; VIX every other tick (30s) when open
+    const doVIX=(ST.tick%2===1)||!open;
+    await Promise.allSettled([
+      refreshNifty(),
+      refreshSensex(),
+      doVIX?refreshVIX():Promise.resolve()
+    ]);
+
+    saveLS();
+    setTxt('lastUpdBadge',fmtTime(Date.now()));
+    setUpd('globalUpdBadge','upd-ok','✓ LIVE');
+  }catch(e){
+    setUpd('globalUpdBadge','upd-err','ERR');
+    console.warn('[OC] loop err:',e.message);
+  }
+  ST.loopRun=false;
+  const interval=isOpen()?15000:300000;// 15s open · 5min closed
+  ST.loopTm=setTimeout(mainLoop,interval);
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded',async()=>{
+  // 1. Restore today's series from localStorage
+  loadLS();
+
+  // 2. Build all 9 charts
+  CH.nOi=buildOIChart('nOiCanvas','oi');
+  CH.sOi=buildOIChart('sOiCanvas','oi');
+  CH.nDoi=buildOIChart('nDoiCanvas','doi');
+  CH.sDoi=buildOIChart('sDoiCanvas','doi');
+  CH.vix=buildLineChart('vixCanvas','#ffc107');
+  CH.nPcr=buildLineChart('nPcrCanvas','#4aa3ff');
+  CH.sPcr=buildLineChart('sPcrCanvas','#4aa3ff');
+  CH.nIv=buildLineChart('nIvCanvas','#c39cff');
+  CH.sIv=buildLineChart('sIvCanvas','#c39cff');
+
+  // 3. Immediately render any restored series
+  if(SER.vix.length){refreshLineChart(CH.vix,SER.vix,'vixCurVal',null,2);const last=SER.vix[SER.vix.length-1];if(last){const col=last.y>20?'var(--red)':last.y<12?'var(--green)':'var(--amber)';setTxt('vixCur',fi(last.y,2));const el=document.getElementById('vixCur');if(el)el.style.color=col;const cv=document.getElementById('vixCurVal');if(cv)cv.style.color=col;}}
+  if(SER.nPcr.length){refreshLineChart(CH.nPcr,SER.nPcr,'nPcrCurVal','nPcrCur',2);}
+  if(SER.sPcr.length){refreshLineChart(CH.sPcr,SER.sPcr,'sPcrCurVal','sPcrCur',2);}
+  if(SER.nIv.length){refreshLineChart(CH.nIv,SER.nIv,'nIvCurVal','nIvCur',1);}
+  if(SER.sIv.length){refreshLineChart(CH.sIv,SER.sIv,'sIvCurVal','sIvCur',1);}
+
+  // 4. Detect server mode
+  setUpd('globalUpdBadge','upd-fetch','INIT…');
+  await detectServer();
+
+  // 5. Fill VIX intraday (fills missing data from 9:15 to now)
+  setUpd('vixUpd','upd-fetch','FILL…');
+  await fetchVIXIntraday();
+  if(SER.vix.length){
+    refreshLineChart(CH.vix,SER.vix,'vixCurVal',null,2);
+    setUpd('vixUpd','upd-ok',fmtTime(Date.now()));
+  }
+
+  // 6. Start main data loop
+  mainLoop();
+});
+
+// Persist on unload
+window.addEventListener('beforeunload',()=>{
+  if(ST.loopTm)clearTimeout(ST.loopTm);
+  saveLS();
+});
+</script>
+</body>
+</html>
